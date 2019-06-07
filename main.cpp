@@ -1,6 +1,7 @@
-#include "ObjCMain.h"
+#include <Renderer/Renderer.h>
 
 int main(int argc, char** argv)
 {
-    return ObjCMain();
+    auto renderer = Summit::CreateRenderer();
+    return 0;
 }
