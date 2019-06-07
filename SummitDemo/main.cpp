@@ -36,9 +36,33 @@ void Unload()
     }
 }
 
+void* GetFunctionPointer(const std::string& name)
+{
+    if (!metalRendererHandle)
+    {
+        std::cout << "Failed to load function " << name << " from module \"" << "metal renderer" << "\". Module not loaded" << std::endl;
+        return nullptr;
+    }
+    
+    auto funcPtr = dlsym(metalRendererHandle, name.c_str());
+    if (!funcPtr)
+    {
+        std::cout << "Failed to load function " << name << " from module \"" << "metal renderer" << "\": " << dlerror() << std::endl;
+    }
+    
+    return funcPtr;
+}
+
+typedef uint64_t(*FuncParam)();
+
 int main(int argc, char** argv)
 {
     Load();
+    const auto createMetalRendererFunc = GetFunctionPointer("createRenderer");
+    FuncParam f = (FuncParam)createMetalRendererFunc;
+    
+    const auto metalRenderer = (Summit::IRenderer*)f();
+    
     Unload();
     
     return 0;
