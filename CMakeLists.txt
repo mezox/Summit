@@ -45,4 +45,5 @@ endmacro()
 set(SHARED_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/Public)
 
 add_subdirectory(MetalRenderer)
+add_subdirectory(OpenGLRenderer)
 add_subdirectory(SummitDemo)

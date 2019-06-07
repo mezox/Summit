@@ -2,68 +2,90 @@
 #include <dlfcn.h>
 
 #include <iostream>
+#include <string>
 
-void* metalRendererHandle{ nullptr };
-
-void Load()
+class Module
 {
-    if (!metalRendererHandle)
+public:
+    Module(const std::string& name)
+        : mName(name)
+    {}
+    
+    void Load()
     {
-        metalRendererHandle = dlopen("libMetalRenderer.dylib", RTLD_LAZY | RTLD_LOCAL);
-        if(!metalRendererHandle)
+        if (!handle)
         {
-            std::cout << "Failed to load module metal renderer" << std::endl;
-            return;
+            handle = dlopen(mName.c_str(), RTLD_LAZY | RTLD_LOCAL);
+            if(!handle)
+            {
+                std::cout << "Failed to load module metal renderer" << std::endl;
+                return;
+            }
+            
+            std::cout << "Loaded module " << mName << std::endl;
         }
-        
-        std::cout << "Loaded module metal renderer" << std::endl;
-    }
-}
-
-void Unload()
-{
-    if(metalRendererHandle)
-    {
-        if (dlclose(metalRendererHandle))
-        {
-            std::cout << "Failed to unload module metal renderer" << std::endl;
-            return;
-        }
-        
-        metalRendererHandle = nullptr;
-        
-        std::cout << "Unloaded module metal renderer" << std::endl;
-    }
-}
-
-void* GetFunctionPointer(const std::string& name)
-{
-    if (!metalRendererHandle)
-    {
-        std::cout << "Failed to load function " << name << " from module \"" << "metal renderer" << "\". Module not loaded" << std::endl;
-        return nullptr;
     }
     
-    auto funcPtr = dlsym(metalRendererHandle, name.c_str());
-    if (!funcPtr)
+    void Unload()
     {
-        std::cout << "Failed to load function " << name << " from module \"" << "metal renderer" << "\": " << dlerror() << std::endl;
+        if(handle)
+        {
+            if (dlclose(handle))
+            {
+                std::cout << "Failed to unload module " << mName << std::endl;
+                return;
+            }
+            
+            handle = nullptr;
+            
+            std::cout << "Unloaded module " << mName << std::endl;
+        }
     }
     
-    return funcPtr;
-}
+    void* GetFunctionPointer(const std::string& name)
+    {
+        if (!handle)
+        {
+            std::cout << "Failed to load function " << name << " from module \"" << mName << "\". Module not loaded" << std::endl;
+            return nullptr;
+        }
+        
+        auto funcPtr = dlsym(handle, name.c_str());
+        if (!funcPtr)
+        {
+            std::cout << "Failed to load function " << name << " from module \"" << mName << "\": " << dlerror() << std::endl;
+        }
+        
+        return funcPtr;
+    }
+    
+public:
+    std::string mName;
+    void* handle{ nullptr };
+};
 
 typedef uint64_t(*FuncParam)();
 
 int main(int argc, char** argv)
 {
-    Load();
-    const auto createMetalRendererFunc = GetFunctionPointer("createRenderer");
-    FuncParam f = (FuncParam)createMetalRendererFunc;
+    Module metal("libMetalRenderer.dylib"), gl("libOpenGLRenderer.dylib");
+    metal.Load();
     
-    const auto metalRenderer = (Summit::IRenderer*)f();
+    const auto createMetalRendererFunc = metal.GetFunctionPointer("createRenderer");
+    FuncParam mf = (FuncParam)createMetalRendererFunc;
     
-    Unload();
+    const auto metalRenderer = (Summit::IRenderer*)mf();
+    
+    gl.Load();
+    
+    const auto createGLRendererFunc = gl.GetFunctionPointer("createRenderer");
+    FuncParam gf = (FuncParam)createGLRendererFunc;
+    
+    const auto glRenderer = (Summit::IRenderer*)gf();
+    
+    gl.Unload();
+    
+    metal.Unload();
     
     return 0;
 }
