@@ -30,10 +30,10 @@ set(PRIVATE_SOURCES
 	Private/MetalRendererWrapper.h
 	Private/MetalRendererWrapper.m
 	Private/BridgeHeader.h
+	${SHARED_INCLUDE_DIR}/Renderer/Renderer.swift
 )
 
 set(PUBLIC_SOURCES
-	Public/MetalRenderer/MetalRenderer.swift
 	Public/MetalRenderer/MetalRendererBase.h
 )
 

@@ -26,6 +26,10 @@ set(PRIVATE_SOURCES
 	# Private
 	Private/OpenGLRenderer.h
 	Private/OpenGLRenderer.mm
+    Private/OpenGLRendererImpl.swift
+	Private/OpenGLRendererWrapper.h
+	Private/OpenGLRendererWrapper.m
+	${SHARED_INCLUDE_DIR}/Renderer/Renderer.swift
 )
 
 set(PUBLIC_SOURCES

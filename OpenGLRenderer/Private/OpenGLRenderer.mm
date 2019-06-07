@@ -1,6 +1,5 @@
 #include "OpenGLRenderer.h"
-
-#include <iostream>
+#import "OpenGLRendererWrapper.h"
 
 namespace Summit
 {
@@ -9,16 +8,16 @@ namespace Summit
     public:
         Impl()
         {
+            impl = [[GLRendererWrapper alloc] initWithName:@"GLRenderer"];
         }
         
     public:
+        GLRendererWrapper* impl{ nil };
     };
 
     GLRenderer::GLRenderer()
         : mWrapper(std::make_unique<GLRenderer::Impl>())
-    {
-        std::cout << "Instantiated Cpp GL Renderer" << std::endl;
-    }
+    {}
     
     GLRenderer::~GLRenderer()
     {}
