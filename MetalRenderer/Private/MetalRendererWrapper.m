@@ -1,5 +1,5 @@
 #import "MetalRendererWrapper.h"
-#import "Summit-Swift.h"
+#import "MetalRenderer-Swift.h"
 
 @implementation MetalRendererWrapper
 {

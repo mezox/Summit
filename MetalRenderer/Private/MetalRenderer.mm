@@ -33,3 +33,11 @@ namespace Summit
         return std::make_unique<MetalRenderer>();
     }
 }
+
+extern "C"
+{
+    Summit::IRenderer* createRenderer()
+    {
+        return new Summit::MetalRenderer();
+    }
+}

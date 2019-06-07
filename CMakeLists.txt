@@ -4,6 +4,24 @@ project(Summit C CXX Swift)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(BUILD_SHARED_LIBS 1)
+
+set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/Bin/${CMAKE_BUILD_TYPE} CACHE PATH "Library output path")
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/Bin/${CMAKE_BUILD_TYPE} CACHE PATH "Executable output path")
+
+# Enable project groupping in IDE
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+macro(ide_source_files_group)
+    foreach(source_file ${ARGN})
+        string(REGEX REPLACE "/?[^/]+$" "" folder ${source_file})
+        set(folder "${_target_folder}/${folder}")
+        string(REPLACE "/" "\\" folder ${folder})
+
+        source_group(${folder} FILES ${source_file})
+    endforeach()
+endmacro()
+
 macro(append_compile_flags _flags)
 	foreach(source_file ${ARGN})
 		set_property(SOURCE ${source_file} APPEND_STRING PROPERTY COMPILE_FLAGS " ${_flags}")
@@ -24,30 +42,7 @@ macro(set_objective_cxx_compilation)
     endforeach()
 endmacro()
 
-#set_objective_c_compilation(main.cpp)
-#set_objective_cxx_compilation(Private/Metal/MetalRenderer.mm)
+set(SHARED_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/Public)
 
-include_directories("Public")
-include_directories("Private")
-
-set(METAL_SOURCES
-	# Public
-	Public/Renderer/Renderer.h
-	Public/Renderer/MetalRenderer.swift
-
-	# Private
-	Private/Metal/MetalRenderer.h
-	Private/Metal/MetalRenderer.cpp
-	Private/Metal/MetalRendererImpl.swift
-	Private/Metal/MetalRendererWrapper.h
-	Private/Metal/MetalRendererWrapper.m
-	Private/Metal/BridgeHeader.h
-)
-
-add_executable(${PROJECT_NAME}
-	main.cpp
-	${METAL_SOURCES}
-)
-
-set_property(TARGET ${PROJECT_NAME} PROPERTY XCODE_ATTRIBUTE_SWIFT_OBJC_BRIDGING_HEADER "Private/Metal/BridgeHeader.h")
-#target_compile_options(${PROJECT_NAME} PRIVATE "$<$<COMPILE_LANGUAGE:CXX>:-Werror=objc-method-access>")
+add_subdirectory(MetalRenderer)
+add_subdirectory(SummitDemo)
