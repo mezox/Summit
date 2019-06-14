@@ -2,7 +2,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface GLRendererWrapper : NSObject
+@interface RendererWrapper : NSObject
 -(instancetype)initWithName:(NSString*)name;
+-(NSString*)getGraphicsAPI;
 -(NSString*)getActiveDeviceDescription;
 @end

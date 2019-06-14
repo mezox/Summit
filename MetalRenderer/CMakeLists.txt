@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.13.0)
 
 project(MetalRenderer)
 
+add_definitions("-DSUMMIT_GRAPHICS_API_METAL")
+
 # Module export definition
 if (${BUILD_SHARED_LIBS})
 	add_definitions("-D_METALRENDERER_EXPORT")
@@ -24,13 +26,12 @@ include_directories(
 # platform agnostic source files
 set(PRIVATE_SOURCES
 	# Private
-	Private/MetalRenderer.h
-	Private/MetalRenderer.mm
     Private/MetalRendererImpl.swift
-	Private/MetalRendererWrapper.h
-	Private/MetalRendererWrapper.m
-	Private/BridgeHeader.h
 	${SHARED_INCLUDE_DIR}/Renderer/Renderer.swift
+    ${SHARED_INCLUDE_DIR}/Renderer/RendererImpl.h
+    ${SHARED_INCLUDE_DIR}/Renderer/RendererImpl.mm
+    ${SHARED_INCLUDE_DIR}/Renderer/RendererWrapper.h
+    ${SHARED_INCLUDE_DIR}/Renderer/RendererWrapper.m
 )
 
 set(PUBLIC_SOURCES
@@ -51,5 +52,4 @@ ide_source_files_group( ${PUBLIC_SOURCES}
                         ${PRIVATE_SOURCES}
 )
 
-#set_property(TARGET ${PROJECT_NAME} PROPERTY XCODE_ATTRIBUTE_SWIFT_OBJC_BRIDGING_HEADER "Private/BridgeHeader.h")
 #target_compile_options(${PROJECT_NAME} PRIVATE "$<$<COMPILE_LANGUAGE:CXX>:-Werror=objc-method-access>")

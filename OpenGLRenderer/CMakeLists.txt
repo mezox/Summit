@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.13.0)
 
 project(OpenGLRenderer)
 
+add_definitions("-DSUMMIT_GRAPHICS_API_GL")
+
 # Module export definition
 if (${BUILD_SHARED_LIBS})
 	add_definitions("-D_OPENGLRENDERER_EXPORT")
@@ -24,12 +26,13 @@ include_directories(
 # platform agnostic source files
 set(PRIVATE_SOURCES
 	# Private
-	Private/OpenGLRenderer.h
-	Private/OpenGLRenderer.mm
     Private/OpenGLRendererImpl.swift
-	Private/OpenGLRendererWrapper.h
-	Private/OpenGLRendererWrapper.m
 	${SHARED_INCLUDE_DIR}/Renderer/Renderer.swift
+    ${SHARED_INCLUDE_DIR}/Renderer/Renderer.swift
+    ${SHARED_INCLUDE_DIR}/Renderer/RendererImpl.h
+    ${SHARED_INCLUDE_DIR}/Renderer/RendererImpl.mm
+    ${SHARED_INCLUDE_DIR}/Renderer/RendererWrapper.h
+    ${SHARED_INCLUDE_DIR}/Renderer/RendererWrapper.m
 )
 
 set(PUBLIC_SOURCES

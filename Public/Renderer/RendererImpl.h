@@ -4,11 +4,11 @@
 
 namespace Summit
 {
-    class GLRenderer : public IRenderer
+    class Renderer : public IRenderer
     {
     public:
-        GLRenderer();
-        virtual ~GLRenderer();
+        Renderer();
+        virtual ~Renderer();
         
         GraphicsAPI GetAPI() const override;
         std::string GetDeviceDescription() const override;
