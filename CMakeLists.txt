@@ -4,13 +4,15 @@ project(Summit C CXX Swift)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(BUILD_SHARED_LIBS 1)
+set(CMAKE_BUILD_TYPE Debug)
 
-set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/Bin/${CMAKE_BUILD_TYPE} CACHE PATH "Library output path")
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/Bin/${CMAKE_BUILD_TYPE} CACHE PATH "Executable output path")
+set(BUILD_SHARED_LIBS 1)
 
 # Enable project groupping in IDE
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/Bin/${CMAKE_BUILD_TYPE} CACHE PATH "Library output path")
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/Bin/${CMAKE_BUILD_TYPE} CACHE PATH "Executable output path")
 
 macro(ide_source_files_group)
     foreach(source_file ${ARGN})

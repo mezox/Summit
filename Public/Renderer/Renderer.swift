@@ -9,4 +9,5 @@ enum GraphicsAPI : String {
 
 public protocol RendererDelegate : NSObjectProtocol {
     func getGraphicsAPI() -> String
+    func getActiveDeviceDescription() -> String
 }

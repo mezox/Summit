@@ -4,4 +4,5 @@
 
 @interface GLRendererWrapper : NSObject
 -(instancetype)initWithName:(NSString*)name;
+-(NSString*)getActiveDeviceDescription;
 @end

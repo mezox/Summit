@@ -11,6 +11,7 @@ namespace Summit
         virtual ~MetalRenderer();
         
         GraphicsAPI GetAPI() const override;
+        std::string GetDeviceDescription() const override;
         
     private:
         class Impl;

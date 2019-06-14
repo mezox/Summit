@@ -11,4 +11,9 @@
     swiftRenderer = [[GLRenderer alloc] initWithStr: name];
     return self;
 }
+
+-(NSString*)getActiveDeviceDescription
+{
+    return [swiftRenderer getActiveDeviceDescription];
+}
 @end

@@ -4,4 +4,5 @@
 
 @interface MetalRendererWrapper : NSObject
 -(instancetype)initWithName:(NSString*)name;
+-(NSString*)getActiveDeviceDescription;
 @end

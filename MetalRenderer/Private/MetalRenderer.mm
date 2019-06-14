@@ -27,10 +27,10 @@ namespace Summit
     {
         return GraphicsAPI::Metal;
     }
-
-    std::unique_ptr<IRenderer> CreateRenderer()
+    
+    std::string MetalRenderer::GetDeviceDescription() const
     {
-        return std::make_unique<MetalRenderer>();
+        return [[mWrapper->impl getActiveDeviceDescription] UTF8String];
     }
 }
 

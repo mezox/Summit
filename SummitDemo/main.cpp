@@ -70,21 +70,23 @@ int main(int argc, char** argv)
 {
     Module metal("libMetalRenderer.dylib"), gl("libOpenGLRenderer.dylib");
     metal.Load();
-    
+
     const auto createMetalRendererFunc = metal.GetFunctionPointer("createRenderer");
     FuncParam mf = (FuncParam)createMetalRendererFunc;
-    
+
     const auto metalRenderer = (Summit::IRenderer*)mf();
-    
+    std::cout << "MetalRenderer device info: " << metalRenderer->GetDeviceDescription() << std::endl;
+
     gl.Load();
-    
+
     const auto createGLRendererFunc = gl.GetFunctionPointer("createRenderer");
     FuncParam gf = (FuncParam)createGLRendererFunc;
-    
+
     const auto glRenderer = (Summit::IRenderer*)gf();
-    
+    std::cout << "GLRenderer device info: " << glRenderer->GetDeviceDescription() << std::endl;
+
     gl.Unload();
-    
+
     metal.Unload();
     
     return 0;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <string>
 
 namespace Summit
 {
@@ -17,8 +18,14 @@ namespace Summit
     public:
         virtual ~IRenderer() = default;
         
-        virtual GraphicsAPI GetAPI() const = 0;
+        /*!
+         @brief Returns enumerated type of underlying graphics API.
+         */
+        [[nodiscard]] virtual GraphicsAPI GetAPI() const = 0;
+        
+        /*!
+         @brief Returns string description of active device.
+         */
+        [[nodiscard]] virtual std::string GetDeviceDescription() const = 0;
     };
-    
-    std::unique_ptr<IRenderer> CreateRenderer();
 }

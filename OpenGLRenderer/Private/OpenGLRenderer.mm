@@ -26,6 +26,11 @@ namespace Summit
     {
         return GraphicsAPI::OpenGL;
     }
+    
+    std::string GLRenderer::GetDeviceDescription() const
+    {
+        return [[mWrapper->impl getActiveDeviceDescription] UTF8String];
+    }
 }
 
 extern "C"
