@@ -6,7 +6,7 @@ add_definitions("-DSUMMIT_GRAPHICS_API_GL")
 
 # Module export definition
 if (${BUILD_SHARED_LIBS})
-	add_definitions("-D_OPENGLRENDERER_EXPORT")
+	add_definitions("-D_RENDERER_EXPORT")
 endif()
 
 # Platform agnostic dependencies
@@ -33,10 +33,10 @@ set(PRIVATE_SOURCES
     ${SHARED_INCLUDE_DIR}/Renderer/RendererImpl.mm
     ${SHARED_INCLUDE_DIR}/Renderer/RendererWrapper.h
     ${SHARED_INCLUDE_DIR}/Renderer/RendererWrapper.m
+    ${SHARED_INCLUDE_DIR}/Renderer/RendererBase.h
 )
 
 set(PUBLIC_SOURCES
-	Public/OpenGLRenderer/OpenGLRendererBase.h
 )
 
 add_library(${PROJECT_NAME}

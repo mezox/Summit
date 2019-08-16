@@ -20,6 +20,11 @@
     return self;
 }
 
+-(void)setupWithView:(NSView*)view
+{
+    [swiftRenderer setupWithView:view];
+}
+
 -(NSString*)getGraphicsAPI
 {
     return [swiftRenderer getGraphicsAPI];
@@ -28,5 +33,10 @@
 -(NSString*)getActiveDeviceDescription
 {
     return [swiftRenderer getActiveDeviceDescription];
+}
+
+-(void)createBufferWithSize:(NSUInteger)size data:(void*)data
+{
+    [swiftRenderer createBufferWithSize:size data:data];
 }
 @end

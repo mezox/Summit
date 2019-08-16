@@ -2,6 +2,8 @@
 
 #include <Renderer/Renderer.h>
 
+#include <vector>
+
 namespace Summit
 {
     class Renderer : public IRenderer
@@ -12,6 +14,10 @@ namespace Summit
         
         GraphicsAPI GetAPI() const override;
         std::string GetDeviceDescription() const override;
+        
+        void SetupView(void* view) override;
+        
+        BufferId CreateBuffer(const BufferDesc& desc) override;
         
     private:
         class Impl;

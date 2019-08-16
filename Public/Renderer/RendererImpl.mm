@@ -37,6 +37,17 @@ namespace Summit
     {
         return [[mWrapper->impl getActiveDeviceDescription] UTF8String];
     }
+    
+    void Renderer::SetupView(void* view)
+    {
+        return [mWrapper->impl setupWithView:(__bridge NSView*)view];
+    }
+    
+    BufferId Renderer::CreateBuffer(const BufferDesc& desc)
+    {
+        [mWrapper->impl createBufferWithSize:desc.size data:desc.data];
+        return{ 1 };
+    }
 }
 
 extern "C"
